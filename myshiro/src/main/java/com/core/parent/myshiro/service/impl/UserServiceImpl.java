@@ -1,0 +1,26 @@
+package com.core.parent.myshiro.service.impl;
+
+import com.core.parent.myshiro.entity.User;
+import com.core.parent.myshiro.mapper.UserMapper;
+import com.core.parent.myshiro.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class UserServiceImpl implements UserService {
+
+    @Autowired
+    private UserMapper userMapper;
+
+    @Override
+    public List<User> selectAll() {
+        return userMapper.selectAll();
+    }
+
+    @Override
+    public User selectByName(String username) {
+        return userMapper.selectByName(username);
+    }
+}

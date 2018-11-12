@@ -10,7 +10,7 @@ import org.apache.shiro.util.Factory;
 
 public class ShiroUtil {
 
-    public static void initShiro(String source,String username,String password) throws Exception{
+    public static void login(String source,String username,String password) throws Exception{
         Factory<SecurityManager> factory = new IniSecurityManagerFactory(source);
         SecurityManager manager = factory.getInstance();
         SecurityUtils.setSecurityManager(manager);

@@ -24,16 +24,15 @@
     </build>
 
     <dependencies>
-        <dependency>
+        <!--<dependency>
             <groupId>org.apache.hadoop</groupId>
             <artifactId>zookeeper</artifactId>
             <version>3.3.0</version>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>com.101tec</groupId>
             <artifactId>zkclient</artifactId>
             <version>0.10</version>
         </dependency>
     </dependencies>
-
 </project>

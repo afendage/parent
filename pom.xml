@@ -16,6 +16,7 @@
         <module>myZookeeper</module>
         <module>myDubbo</module>
         <module>myUtils</module>
+        <module>myshiro</module>
     </modules>
 
     <dependencies>
