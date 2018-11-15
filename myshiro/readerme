@@ -58,3 +58,10 @@ shiro 标签
     html 需要新增依赖和引入：
         1. 在pom文件添加 thymeleaf-extras-shiro 依赖
         2. <html xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
+spring boot 使用shiro 标签需要在 config 配置类加上
+@Bean
+    public ShiroDialect shiroDialect() {
+        return new ShiroDialect();
+
+    }
