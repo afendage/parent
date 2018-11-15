@@ -50,8 +50,8 @@ public class LoginController {
 
     //登出
     @RequestMapping(value = "/logout")
-    public String logout() {
-        return "logout";
+    public ModelAndView logout() {
+        return new ModelAndView("logout");
     }
 
     //错误页面展示
@@ -80,5 +80,11 @@ public class LoginController {
     @RequestMapping(value = "/create")
     public String create() {
         return "Create success!";
+    }
+
+    @RequestMapping("/tag")
+    public ModelAndView shiroTagTest(){
+        ModelAndView mv = new ModelAndView("shiro_tag_demo");
+        return  mv;
     }
 }

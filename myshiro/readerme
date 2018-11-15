@@ -1,10 +1,60 @@
+根对象SecurityManager
+    ，Shiro是从根对象SecurityManager进行身份验证和授权的；也就是所有操作都是自它开始的
+
+Subject：是Shiro 的核心对象，基本所有身份验证、授权都是通过Subject完成。
+
 Realm：域，Shiro 从从Realm获取安全数据（如用户、角色、权限），就是说SecurityManager
 要验证用户身份，那么它需要从Realm获取相应的用户进行比较以确定用户身份是否合法；
 也需要从Realm得到用户相应的角色/权限进行验证用户是否能进行操作；可以把Realm看
 成DataSource ， 即安全数据源
 
+Authenticator：职责是验证用户帐号。
+    如果验证成功，将返回AuthenticationInfo 验证信息；此信息中包含了身份及凭证；
+    如果验证失败将抛出相应的AuthenticationException实现。
+
+    参考：ShiroUserTest testStrategy()
+
+AuthenticationToken 用于收集用户提交的身份（如用户名）及凭据（如密码）
+
+AuthenticationInfo有两个作用：
+    1、进行凭据验证；（如果Realm 是AuthenticatingRealm 子类，则提供给AuthenticatingRealm 内部使用的
+              CredentialsMatcher进行凭据验证；（如果没有继承它需要在自己的Realm中自己实现验证））
+    2、提供给SecurityManager来创建Subject（提供身份信息）；
+
+PrincipalCollection 因为我们可以在Shiro中同时配置多个Realm，所以呢身份信息可能就有多个；因此其提供
+                    了PrincipalCollection用于聚合这些身份信息
+
+AuthorizationInfo   用于聚合授权信息的。
+                    当我们使用AuthorizingRealm 时，如果身份验证成功，在进行授权时就通过
+                    doGetAuthorizationInfo方法获取角色/权限信息用于授权验证。
+
+INI 配置
+    [main]
+    #提供了对根对象securityManager及其依赖的配置
+    securityManager=org.apache.shiro.mgt.DefaultSecurityManager
+    …………
+    securityManager.realms=$jdbcRealm
+    [users]
+    #提供了对用户/密码及其角色的配置，用户名=密码，角色1，角色2
+    username=password,role1,role2
+    [roles]
+    #提供了角色及权限之间关系的配置，角色=权限1，权限2
+    role1=permission1,permission2
+    [urls]
+    #用于web，提供了对web url拦截相关的配置，url=拦截器[参数]，拦截器
+    /index.html = anon # 不需要登录即可访问
+    /admin/** = authc, roles[admin], perms["permission1"]
+    authc拦截器表示需要身份认证通过后才能访问
+    oles[admin]拦截器表示需要有admin 角色授权才能访问
+    perms["user:create"]拦截器表示需要有“user:create”权限才能访问
 
 # spring boot 整合 shiro
     com.core.parent.myshiro.system.config.ShiroConfiguration
     com.core.parent.myshiro.system.realm.UserRealm
     com.core.parent.myshiro.controller.LoginController
+
+shiro 标签
+    jsp 需要导入标签库: <%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+    html 需要新增依赖和引入：
+        1. 在pom文件添加 thymeleaf-extras-shiro 依赖
+        2. <html xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">

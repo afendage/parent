@@ -9,7 +9,7 @@ import java.util.List;
 @Mapper
 public interface PermissionMapper {
 
-    @Select("select * from roles_permissions where role_name=#{roleName}")
+    @Select("select * from roles_permissions where rolename=#{roleName}")
     List<Permission> selectByName(String roleName);
 
 }

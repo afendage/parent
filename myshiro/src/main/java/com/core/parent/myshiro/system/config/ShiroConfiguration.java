@@ -1,5 +1,6 @@
 package com.core.parent.myshiro.system.config;
 
+import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import com.core.parent.myshiro.system.realm.UserRealm;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -27,6 +28,12 @@ public class ShiroConfiguration {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(userRealm());
         return securityManager;
+    }
+
+    //用于thymeleaf模板使用shiro标签
+    @Bean
+    public ShiroDialect shiroDialect() {
+        return new ShiroDialect();
     }
 
     //Filter工厂，设置对应的过滤条件和跳转条件

@@ -1,0 +1,41 @@
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>玩转shiro</title>
+</head>
+<body>
+
+    <h1>玩转shiro</h1>
+    <shiro:guest>欢迎游客访问，<a href="${pageContext.request.contextPath}/login.jsp">登录</a></shiro:guest>
+    <shiro:user>欢迎 [<shiro:principal/>],<a href="${pageContext.request.contextPath}/logout">退出</a></shiro:user>
+
+    <hr>
+    <shiro:authenticated>
+        用户[<shiro:principal/>]身份验证已通过
+    </shiro:authenticated>
+    <shiro:notAuthenticated>
+        未身份验证（包括记住我）
+    </shiro:notAuthenticated>
+
+    <hr>
+    <shiro:hasRole name="admin">
+        用户[<shiro:principal/>]拥有角色admin<br/>
+    </shiro:hasRole>
+    <shiro:hasAnyRoles name="admin,user">
+        用户[<shiro:principal/>]拥有角色admin 或user<br/>
+    </shiro:hasAnyRoles>
+    <shiro:lacksRole name="abc">
+        用户[<shiro:principal/>]没有角色abc<br/>
+    </shiro:lacksRole>
+
+    <hr>
+    <shiro:hasPermission name="user:create">
+        用户[<shiro:principal/>]拥有权限user:create<br/>
+    </shiro:hasPermission>
+    <shiro:lacksPermission name="org:create">
+        用户[<shiro:principal/>]没有权限org:create<br/>
+    </shiro:lacksPermission>
+<br />
+</body>
+</html>
