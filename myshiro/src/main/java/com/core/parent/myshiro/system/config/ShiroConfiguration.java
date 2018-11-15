@@ -34,6 +34,7 @@ public class ShiroConfiguration {
     @Bean
     public ShiroDialect shiroDialect() {
         return new ShiroDialect();
+
     }
 
     //Filter工厂，设置对应的过滤条件和跳转条件
