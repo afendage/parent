@@ -9,6 +9,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,30 +18,29 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Map;
 
-@RestController
+@Controller
 public class LoginController {
 
     @Autowired
     private UserService loginService;
 
     //退出的时候是get请求，主要是用于退出
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ModelAndView login() {
+    @RequestMapping(value = "/loginPage")
+    public ModelAndView loginPage() {
         ModelAndView mv = new ModelAndView("login");
         return mv;
     }
 
     //post登录
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(@RequestBody Map map) {
+    @RequestMapping(value = "/login")
+    public String login(String username,String password,boolean rememberMe) {
         //添加用户认证信息
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(
-                map.get("username").toString(),
-                map.get("password").toString());
+                username,password,rememberMe);
         //进行验证，这里可以捕获异常，然后返回对应信息
         subject.login(usernamePasswordToken);
-        return "login";
+        return "index";
     }
 
     @RequestMapping(value = "/index")
