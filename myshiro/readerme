@@ -66,7 +66,7 @@ spring boot 使用shiro 标签需要在 config 配置类加上
 
     }
 
- remeberMe：记录登录状态，直接关浏览器再打开浏览器，进入我们的网站就会自动登陆。
+remeberMe：记录登录状态，直接关浏览器再打开浏览器，进入我们的网站就会自动登陆。
     shiro觉得 rememberMe不安全,所以shiro 就算 rememberMe = true 也不能算是 authc(认证过) 的，而是 user(登录过) 级别的。
     如 /** = authc 这样 rememberMe 是无效的
        /** = user 这样才能生效
