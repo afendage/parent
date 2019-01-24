@@ -3,9 +3,12 @@ package com.lambda.demo;
 import com.lambda.bean.Employee;
 import org.junit.Test;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.*;
 import java.util.function.*;
 import java.util.stream.Collectors;
+import java.util.stream.LongStream;
 
 public class Demo1 {
 
@@ -241,6 +244,31 @@ public class Demo1 {
         // join 拼接
         String str = employees.stream().map(Employee::getName).collect(Collectors.joining());
         System.out.println(str);
+    }
+
+    /**
+     * 并行流-parallel
+     */
+    // 20亿 888 毫秒左右
+    @Test
+    public void test6(){
+        Instant start = Instant.now();
+        Long sum = LongStream.rangeClosed(0L,2000000000L).parallel().reduce(0,Long::sum);
+        System.out.println(sum);
+        Instant end = Instant.now();
+        System.out.println(Duration.between(start,end).toMillis());
+    }
+    // 对比串行流 20亿 1387 毫秒左右。在往上加到 50 亿，串行流我这里已经跑不动了，但是并行parallel的可以
+    @Test
+    public void test7(){
+        Instant start = Instant.now();
+        long sum = 0L;
+        for(int i=0;i<=2000000000L;i++){
+            sum +=i;
+        }
+        System.out.println(sum);
+        Instant end = Instant.now();
+        System.out.println(Duration.between(start,end).toMillis());
     }
 }
 
